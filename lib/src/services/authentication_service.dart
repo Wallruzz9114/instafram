@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instafram/src/screens/feed_screen.dart';
 
 class AuthenticationService {
   final FirebaseAuth _authenticationInstance = FirebaseAuth.instance;
@@ -24,8 +23,7 @@ class AuthenticationService {
           'profileImage': '',
         });
 
-        // Navigate to the feed screen
-        Navigator.pushReplacementNamed(context, FeedScreen.id);
+        Navigator.pop(context);
       }
     } catch (e) {
       print(e);

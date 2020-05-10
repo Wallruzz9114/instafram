@@ -9,13 +9,19 @@ class Instafram extends StatelessWidget {
   Widget _getScreen() => StreamBuilder<FirebaseUser>(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) =>
-            snapshot.hasData ? RootScreen() : LogInScreen(),
+            snapshot.hasData
+                ? RootScreen(userId: snapshot.data.uid)
+                : LogInScreen(),
       );
 
   @override
   MaterialApp build(BuildContext context) => MaterialApp(
         title: 'Instafram',
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryIconTheme:
+              Theme.of(context).primaryIconTheme.copyWith(color: Colors.black),
+        ),
         home: _getScreen(),
         routes: <String, Widget Function(BuildContext)>{
           LogInScreen.id: (BuildContext context) => LogInScreen(),

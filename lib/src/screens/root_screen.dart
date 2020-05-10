@@ -8,6 +8,10 @@ import 'package:instafram/src/screens/profile_screen.dart';
 import 'package:instafram/src/screens/search_screen.dart';
 
 class RootScreen extends StatefulWidget {
+  const RootScreen({this.userId});
+
+  final String userId;
+
   @override
   _RootScreenState createState() => _RootScreenState();
 }
@@ -114,7 +118,7 @@ class _RootScreenState extends State<RootScreen> {
             SearchScreen(),
             NewPostScreen(),
             NotificationsScreen(),
-            ProfileScreen(),
+            ProfileScreen(userId: widget.userId)
           ],
           onPageChanged: (int index) {
             setState(() {
