@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instafram/src/models/user.dart';
@@ -33,10 +34,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
                   child: Row(
                     children: <Widget>[
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 50.0,
-                        backgroundImage:
-                            NetworkImage('https://i.redd.it/dmdqlcdpjlwz.jpg'),
+                        backgroundImage: (user.profileImage.isEmpty
+                                ? const AssetImage(
+                                    'assets/images/user_placeholder.jpg')
+                                : CachedNetworkImageProvider(user.profileImage))
+                            as ImageProvider<dynamic>,
                       ),
                       Expanded(
                         child: Column(
