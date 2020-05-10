@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instafram/src/services/authentication_service.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'sign_up_screen';
@@ -9,12 +10,14 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthenticationService _authenticationService = AuthenticationService();
   String _username, _email, _password;
 
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       // Logging in the user w/ Firebase
+      _authenticationService.signUp(context, _username, _email, _password);
     }
   }
 
@@ -29,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const Text(
-                'Instafram',
+                'Instagram',
                 style: TextStyle(
                   fontFamily: 'Billabong',
                   fontSize: 50.0,

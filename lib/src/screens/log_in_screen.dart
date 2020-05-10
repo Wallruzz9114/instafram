@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instafram/src/screens/sign_up_screen.dart';
+import 'package:instafram/src/services/authentication_service.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String id = 'log_in_screen';
@@ -10,12 +11,14 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthenticationService _authenticationService = AuthenticationService();
   String _email, _password;
 
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       // Log in user
+      _authenticationService.login(_email, _password);
     }
   }
 
@@ -29,7 +32,7 @@ class _LogInScreenState extends State<LogInScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'Instafram',
+                  'Instagram',
                   style: TextStyle(
                     fontFamily: 'Billabong',
                     fontSize: 50.0,
@@ -76,7 +79,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           color: Colors.blue,
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            'LogIn',
+                            'Login',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,
