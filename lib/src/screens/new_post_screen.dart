@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instafram/src/utils/constants.dart';
 
 class NewPostScreen extends StatefulWidget {
   @override
@@ -7,7 +8,8 @@ class NewPostScreen extends StatefulWidget {
 
 class _NewPostScreenState extends State<NewPostScreen> {
   @override
-  Scaffold build(BuildContext context) => const Scaffold(
+  Scaffold build(BuildContext context) => Scaffold(
+        appBar: customAppBar,
         body: Center(
           child: Text('New Post'),
         ),

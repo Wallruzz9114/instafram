@@ -1,17 +1,15 @@
 import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instafram/src/models/user_provider.dart';
 import 'package:instafram/src/screens/feed_screen.dart';
 import 'package:instafram/src/screens/new_post_screen.dart';
 import 'package:instafram/src/screens/notifications_screen.dart';
 import 'package:instafram/src/screens/profile_screen.dart';
 import 'package:instafram/src/screens/search_screen.dart';
+import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
-  const RootScreen({this.userId});
-
-  final String userId;
-
   @override
   _RootScreenState createState() => _RootScreenState();
 }
@@ -100,17 +98,6 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Scaffold build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Instagram',
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Billabong',
-              fontSize: 35.0,
-            ),
-          ),
-        ),
         body: PageView(
           controller: _pageController,
           children: <Widget>[
@@ -118,7 +105,8 @@ class _RootScreenState extends State<RootScreen> {
             SearchScreen(),
             NewPostScreen(),
             NotificationsScreen(),
-            ProfileScreen(userId: widget.userId)
+            ProfileScreen(
+                userId: Provider.of<UserProvider>(context).currentUserId)
           ],
           onPageChanged: (int index) {
             setState(() {

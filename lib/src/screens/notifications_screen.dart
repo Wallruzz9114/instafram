@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instafram/src/utils/constants.dart';
 
 class NotificationsScreen extends StatefulWidget {
   @override
@@ -7,7 +8,8 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
-  Scaffold build(BuildContext context) => const Scaffold(
+  Scaffold build(BuildContext context) => Scaffold(
+        appBar: customAppBar,
         body: Center(
           child: Text('Notifications'),
         ),

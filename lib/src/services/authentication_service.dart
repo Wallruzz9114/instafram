@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instafram/src/models/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AuthenticationService {
   final FirebaseAuth _authenticationInstance = FirebaseAuth.instance;
@@ -22,6 +24,8 @@ class AuthenticationService {
           'email': email,
           'profileImage': '',
         });
+
+        Provider.of<UserProvider>(context).currentUserId = signedInUser.uid;
 
         Navigator.pop(context);
       }

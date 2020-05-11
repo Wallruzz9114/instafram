@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instafram/src/screens/sign_up_screen.dart';
 import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/utils/constants.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String id = 'log_in_screen';
@@ -24,6 +25,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Scaffold build(BuildContext context) => Scaffold(
+        appBar: customAppBar,
         body: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
