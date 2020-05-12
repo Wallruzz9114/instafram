@@ -17,7 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Scaffold build(BuildContext context) => Scaffold(
-        appBar: customAppBar,
+        appBar: customAppBar('Account'),
         backgroundColor: Colors.white,
         body: FutureBuilder<DocumentSnapshot>(
           future: usersReference.document(widget.userId).get(),

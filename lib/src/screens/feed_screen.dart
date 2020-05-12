@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/utils/constants.dart';
 
 class FeedScreen extends StatefulWidget {
   static const String id = 'feed_screen';
@@ -13,6 +14,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Scaffold build(BuildContext context) => Scaffold(
+        appBar: customAppBar('Instagram'),
         backgroundColor: Colors.blue,
         body: Center(
           child: FlatButton(

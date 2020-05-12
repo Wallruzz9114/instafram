@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instafram/src/models/post.dart';
 import 'package:instafram/src/models/user.dart';
 import 'package:instafram/src/utils/constants.dart';
 
@@ -17,5 +18,18 @@ class DatabaseService {
         .getDocuments();
 
     return searchResult;
+  }
+
+  static void createPost(Post post) {
+    postsReference
+        .document(post.authorId)
+        .collection('all_posts')
+        .add(<String, dynamic>{
+      'imageURL': post.imageURL,
+      'caption': post.caption,
+      'likes': post.likes,
+      'authorId': post.authorId,
+      'timestamp': post.timestamp,
+    });
   }
 }

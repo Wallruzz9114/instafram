@@ -40,4 +40,19 @@ class StorageService {
 
     return compressedImageFile;
   }
+
+  static Future<String> uploadPostMedia(File imageFile) async {
+    final String imageId = Uuid().v4();
+    final File image = await compressImage(imageId, imageFile);
+
+    // Upload to firebase storage
+    final StorageUploadTask uploadTask =
+        storageReference.child('images/posts/post_$imageId.jpg').putFile(image);
+
+    final StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    final String downloadURL =
+        await storageTaskSnapshot.ref.getDownloadURL() as String;
+
+    return downloadURL;
+  }
 }

@@ -9,8 +9,8 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Scaffold build(BuildContext context) => Scaffold(
-        appBar: customAppBar,
-        body: Center(
+        appBar: customAppBar('Notifications'),
+        body: const Center(
           child: Text('Notifications'),
         ),
       );

@@ -6,15 +6,17 @@ final Firestore _firestoreInstance = Firestore.instance;
 final StorageReference storageReference = FirebaseStorage.instance.ref();
 final CollectionReference usersReference =
     _firestoreInstance.collection('users');
+final CollectionReference postsReference =
+    _firestoreInstance.collection('posts');
 
-final AppBar customAppBar = AppBar(
-  backgroundColor: Colors.white,
-  title: Text(
-    'Instagram',
-    style: TextStyle(
-      color: Colors.black,
-      fontFamily: 'Billabong',
-      fontSize: 35.0,
-    ),
-  ),
-);
+AppBar customAppBar(String title) => AppBar(
+      backgroundColor: Colors.white,
+      title: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontFamily: title == 'Instagram' ? 'Billabong' : null,
+          fontSize: title == 'Instagram' ? 35.0 : null,
+        ),
+      ),
+    );
