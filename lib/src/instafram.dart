@@ -1,39 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instafram/src/models/user_provider.dart';
-import 'package:instafram/src/screens/feed_screen.dart';
-import 'package:instafram/src/screens/log_in_screen.dart';
-import 'package:instafram/src/screens/root_screen.dart';
-import 'package:instafram/src/screens/sign_up_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:instafram/src/helpers/main_theme.dart';
+import 'package:instafram/src/helpers/routes.dart';
+import 'package:instafram/src/services/application_service.dart';
+import 'package:instafram/src/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 class Instafram extends StatelessWidget {
-  Widget _getScreen() => StreamBuilder<FirebaseUser>(
-        stream: FirebaseAuth.instance.onAuthStateChanged,
-        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
-          if (snapshot.hasData) {
-            Provider.of<UserProvider>(context).currentUserId =
-                snapshot.data.uid;
-            return RootScreen();
-          } else {
-            return LogInScreen();
-          }
-        },
-      );
-
   @override
-  MaterialApp build(BuildContext context) => MaterialApp(
-        title: 'Instafram',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryIconTheme:
-              Theme.of(context).primaryIconTheme.copyWith(color: Colors.black),
+  MultiProvider build(BuildContext context) => MultiProvider(
+        providers: <SingleChildCloneableWidget>[
+          ChangeNotifierProvider<ApplicationService>(
+              create: (_) => ApplicationService()),
+          ChangeNotifierProvider<AuthenticationService>(
+              create: (_) => AuthenticationService()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Instafram',
+          theme: apptheme.copyWith(
+            textTheme: GoogleFonts.muliTextTheme(
+              Theme.of(context).textTheme,
+            ),
+          ),
+          routes: Routes.route(),
+          onGenerateRoute: (RouteSettings settings) =>
+              Routes.onGenerateRoute(settings),
+          onUnknownRoute: (RouteSettings settings) =>
+              Routes.onUnknownRoute(settings),
         ),
-        home: _getScreen(),
-        routes: <String, Widget Function(BuildContext)>{
-          LogInScreen.id: (BuildContext context) => LogInScreen(),
-          SignUpScreen.id: (BuildContext context) => SignUpScreen(),
-          FeedScreen.id: (BuildContext context) => FeedScreen(),
-        },
       );
 }

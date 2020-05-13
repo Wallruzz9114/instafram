@@ -1,0 +1,211 @@
+import 'dart:developer' as developer;
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:instafram/src/components/custom_widgets.dart';
+import 'package:intl/intl.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:instafram/src/components/shared/custom_loader.dart';
+
+final FirebaseAnalytics kAnalytics = FirebaseAnalytics();
+final Firestore kfirestore = Firestore.instance;
+final CustomLoader kScreenloader = CustomLoader();
+
+String getPostTime2(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  final DateTime dt = DateTime.parse(date).toLocal();
+  final String dat =
+      DateFormat.jm().format(dt) + ' - ' + DateFormat('dd MMM yy').format(dt);
+  return dat;
+}
+
+String getdob(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  final DateTime dt = DateTime.parse(date).toLocal();
+  final String dat = DateFormat.yMMMd().format(dt);
+  return dat;
+}
+
+String getJoiningDate(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  final DateTime dt = DateTime.parse(date).toLocal();
+  final String dat = DateFormat('MMMM yyyy').format(dt);
+  return 'Joined $dat';
+}
+
+String getChatTime(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  String msg = '';
+  final DateTime dt = DateTime.parse(date).toLocal();
+
+  if (DateTime.now().toLocal().isBefore(dt)) {
+    return DateFormat.jm().format(DateTime.parse(date).toLocal()).toString();
+  }
+
+  final Duration dur = DateTime.now().toLocal().difference(dt);
+  if (dur.inDays > 0) {
+    msg = '${dur.inDays} d';
+    if (dur.inDays == 1) {
+      return '1d';
+    } else {
+      return DateFormat('dd MMM').format(dt);
+    }
+  } else if (dur.inHours > 0) {
+    msg = '${dur.inHours} h';
+  } else if (dur.inMinutes > 0) {
+    msg = '${dur.inMinutes} m';
+  } else if (dur.inSeconds > 0) {
+    msg = '${dur.inSeconds} s';
+  } else {
+    msg = 'now';
+  }
+  return msg;
+}
+
+String getPollTime(String date) {
+  int hr, mm;
+  String msg = 'Poll ended';
+  final DateTime enddate = DateTime.parse(date);
+  if (DateTime.now().isAfter(enddate)) {
+    return msg;
+  }
+  msg = 'Poll ended in';
+  final Duration dur = enddate.difference(DateTime.now());
+  hr = dur.inHours - dur.inDays * 24;
+  mm = dur.inMinutes - (dur.inHours * 60);
+  if (dur.inDays > 0) {
+    msg = ' ' + dur.inDays.toString() + (dur.inDays > 1 ? ' Days ' : ' Day');
+  }
+  if (hr > 0) {
+    msg += ' ' + hr.toString() + ' hour';
+  }
+  if (mm > 0) {
+    msg += ' ' + mm.toString() + ' min';
+  }
+  return (dur.inDays).toString() +
+      ' Days ' +
+      ' ' +
+      hr.toString() +
+      ' Hours ' +
+      mm.toString() +
+      ' min';
+}
+
+String getSocialLinks(String url) {
+  if (url != null && url.isNotEmpty) {
+    url = url.contains('https://www') || url.contains('http://www')
+        ? url
+        : url.contains('www') &&
+                (!url.contains('https') && !url.contains('http'))
+            ? 'https://' + url
+            : 'https://www.' + url;
+  } else {
+    return null;
+  }
+  cprint('Launching URL : $url');
+  return url;
+}
+
+Future<void> launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    cprint('Could not launch $url');
+  }
+}
+
+void cprint(dynamic data, {String errorIn, String event, String warningIn}) {
+  if (errorIn != null) {
+    developer.log('[Error]', time: DateTime.now(), error: data, name: errorIn);
+  } else if (data != null) {
+    developer.log(
+      data as String,
+      time: DateTime.now(),
+    );
+  }
+  if (event != null) {
+    // logEvent(event);
+  }
+}
+
+void logEvent(String event, {Map<String, dynamic> parameter}) {
+  kReleaseMode
+      ? kAnalytics.logEvent(name: event, parameters: parameter)
+      : print('[EVENT]: $event');
+}
+
+void debugLog(String log, {dynamic param = ''}) {
+  final String time = DateFormat('mm:ss:mmm').format(DateTime.now());
+  print('[$time][Log]: $log, $param');
+}
+
+void share(String message, {String subject}) {
+  Share.share(message, subject: subject);
+}
+
+List<String> getHashTags(String text) {
+  final RegExp reg = RegExp(
+      r'([#])\w+|(https?|ftp|file|#)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]*');
+  final Iterable<Match> _matches = reg.allMatches(text);
+  final List<String> resultMatches = <String>[];
+  for (final Match match in _matches) {
+    if (match.group(0).isNotEmpty) {
+      final String tag = match.group(0);
+      resultMatches.add(tag);
+    }
+  }
+  return resultMatches;
+}
+
+String getUserName({String name, String id}) {
+  String userName = '';
+  name = name.split(' ')[0];
+  id = id.substring(0, 4).toLowerCase();
+  userName = '@$name$id';
+  return userName;
+}
+
+bool validateCredentials(
+    GlobalKey<ScaffoldState> _scaffoldKey, String email, String password) {
+  if (email == null || email.isEmpty) {
+    customSnackBar(_scaffoldKey, 'Please enter email id');
+    return false;
+  } else if (password == null || password.isEmpty) {
+    customSnackBar(_scaffoldKey, 'Please enter password');
+    return false;
+  } else if (password.length < 8) {
+    customSnackBar(_scaffoldKey, 'Password must me 8 character long');
+    return false;
+  }
+
+  final bool status = validateEmal(email);
+
+  if (!status) {
+    customSnackBar(_scaffoldKey, 'Please enter valid email id');
+    return false;
+  }
+
+  return true;
+}
+
+bool validateEmal(String email) {
+  const String p =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  final RegExp regExp = RegExp(p);
+  final bool status = regExp.hasMatch(email);
+
+  return status;
+}

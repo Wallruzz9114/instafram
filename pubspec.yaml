@@ -1,20 +1,8 @@
 name: instafram
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
@@ -41,6 +29,12 @@ dependencies:
   image_cropper: ^1.1.0
   animator: ^1.0.0+3
   intl: ^0.16.0
+  http: ^0.12.1
+  shared_preferences: ^0.5.1+2
+  url_launcher: ^5.4.7
+  share: ^0.6.3
+  google_fonts: ^0.3.9
+  firebase_remote_config: ^0.3.0+3
 
 dependency_overrides:
   firebase_core: 0.4.3+3
@@ -48,14 +42,43 @@ dependency_overrides:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: '^0.7.3'
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: 'assets/images/icon-400.png'
+  image_path_android: 'assets/images/icon-400.png'
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/icon-48.png
+    - assets/images/icon-480.png
+    - assets/images/icon-400.png
+    - assets/images/qr.png
+    - assets/images/bulb.png
+    - assets/images/google_logo.png
 
   fonts:
-    - family: Billabong
+    - family: TwitterIcon
       fonts:
-        - asset: assets/fonts/Billabong.ttf
+        - asset: assets/fonts/icons.ttf
+    - family: HelveticaNeue
+      fonts:
+        - asset: assets/fonts/HelveticaNeue.ttf
+        - asset: assets/fonts/HelveticaNeue400.ttf
+          weight: 400
+        - asset: assets/fonts/HelveticaNeue500.ttf
+          weight: 500
+        - asset: assets/fonts/HelveticaNeue600.ttf
+          weight: 600
+        - asset: assets/fonts/HelveticaNeue700.ttf
+          weight: 700
+        - asset: assets/fonts/HelveticaNeue800.ttf
+          weight: 800
+        - asset: assets/fonts/HelveticaNeue900.ttf
+          weight: 900
+        - asset: assets/fonts/HelveticaNeueIt.ttf
+          style: italic
