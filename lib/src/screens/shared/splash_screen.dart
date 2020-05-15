@@ -8,7 +8,7 @@ import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
 import 'package:instafram/src/screens/home_screen.dart';
 import 'package:instafram/src/screens/shared/welcome_screen.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
@@ -29,8 +29,8 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> timer() async {
     Future<FirebaseUser>.delayed(const Duration(seconds: 1)).then((dynamic _) {
-      final AuthenticationService state =
-          Provider.of<AuthenticationService>(context, listen: false);
+      final AuthenticationState state =
+          Provider.of<AuthenticationState>(context, listen: false);
       // state.authStatus = AuthStatus.NOT_DETERMINED;
       state.getCurrentUser();
     });
@@ -45,9 +45,9 @@ class _SplashPageState extends State<SplashPage> {
           alignment: Alignment.center,
           child: Container(
             padding: const EdgeInsets.all(50),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
             ),
@@ -71,15 +71,14 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context);
+    final AuthenticationState state = Provider.of<AuthenticationState>(context);
     return Scaffold(
       backgroundColor: InstaframColor.white,
       body: state.authenticationStatus == AuthenticationStatus.NOT_DETERMINED
           ? _body()
           : state.authenticationStatus == AuthenticationStatus.NOT_LOGGED_IN
               ? const WelcomeScreen()
-              : HomeScreen(),
+              : const HomeScreen(),
     );
   }
 }

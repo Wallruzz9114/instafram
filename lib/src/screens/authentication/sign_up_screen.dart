@@ -7,7 +7,7 @@ import 'package:instafram/src/helpers/constants.dart';
 import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
 import 'package:instafram/src/models/user.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -115,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           color: InstaframColor.dodgetBlue,
           onPressed: _submitForm,
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Text(
+          child: const Text(
             'Sign up',
             style: TextStyle(color: Colors.white),
           ),
@@ -145,8 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     loader.showLoader(context);
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     final Random random = Random();
     final int randomNumber = random.nextInt(8);
 

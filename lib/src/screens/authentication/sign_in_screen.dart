@@ -4,7 +4,7 @@ import 'package:instafram/src/components/shared/custom_loader.dart';
 import 'package:instafram/src/components/shared/title_text.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
 import 'package:instafram/src/helpers/utilities.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -118,8 +118,8 @@ class _SignInScreenState extends State<SignInScreen> {
       );
 
   void _emailLogin() {
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     if (state.isbusy) {
       return;
     }

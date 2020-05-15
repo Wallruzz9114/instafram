@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instafram/src/components/custom_widgets.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
 import 'package:instafram/src/helpers/utilities.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -125,8 +125,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     }
 
     _focusNode.unfocus();
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     state.forgetPassword(_emailController.text, scaffoldKey: _scaffoldKey);
   }
 

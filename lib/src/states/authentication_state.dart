@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instafram/src/services/application_service.dart';
+import 'package:instafram/src/states/application_state.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:instafram/src/components/custom_widgets.dart';
@@ -15,7 +15,7 @@ import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/utilities.dart';
 import 'package:instafram/src/models/user.dart';
 
-class AuthenticationService extends ApplicationService {
+class AuthenticationState extends ApplicationState {
   AuthenticationStatus authenticationStatus =
       AuthenticationStatus.NOT_DETERMINED;
   bool isSignInWithGoogle = false;
@@ -64,6 +64,14 @@ class AuthenticationService extends ApplicationService {
 
   Stream<DocumentSnapshot> callStream({String uid}) =>
       _userCollection.document(uid).snapshots();
+
+  void databaseInit() {
+    try {
+      _userCollection.document(user.uid).snapshots().listen(_onProfileChanged);
+    } catch (error) {
+      cprint(error, errorIn: 'databaseInit');
+    }
+  }
 
   /// Verify user's credentials for login
   Future<String> signIn(String email, String password,
@@ -411,6 +419,19 @@ class AuthenticationService extends ApplicationService {
       notifyListeners();
     } catch (error) {
       cprint(error, errorIn: 'followUser');
+    }
+  }
+
+  /// Trigger when logged-in user's profile change or updated
+  /// Firebase event callback for profile update
+  void _onProfileChanged(DocumentSnapshot event) {
+    if (event.data != null) {
+      final User updatedUser = User.fromJson(event.data);
+      if (updatedUser.userId == user.uid) {
+        _userModel = updatedUser;
+      }
+      cprint('User Updated');
+      notifyListeners();
     }
   }
 }

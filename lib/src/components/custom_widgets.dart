@@ -168,7 +168,7 @@ double fullWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
 double fullHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-Widget customInkWell({
+Material customInkWell({
   Widget child,
   BuildContext context,
   Function(bool, int) function1,

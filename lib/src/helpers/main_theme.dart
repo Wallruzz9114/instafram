@@ -69,10 +69,10 @@ ThemeData apptheme = ThemeData(
   unselectedWidgetColor: Colors.grey,
   bottomAppBarColor: Colors.white,
   bottomSheetTheme: const BottomSheetThemeData(backgroundColor: AppColor.white),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     brightness: Brightness.light,
     color: InstaframColor.white,
-    iconTheme: const IconThemeData(
+    iconTheme: IconThemeData(
       color: InstaframColor.dodgetBlue,
     ),
     elevation: 0,

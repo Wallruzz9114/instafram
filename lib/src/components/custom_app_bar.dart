@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instafram/src/components/custom_widgets.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -112,8 +112,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ];
 
   Padding _getUserAvatar(BuildContext context) {
-    final AuthenticationService authenticationService =
-        Provider.of<AuthenticationService>(context);
+    final AuthenticationState authenticationState =
+        Provider.of<AuthenticationState>(context);
     return Padding(
       padding: const EdgeInsets.all(10),
       child: customInkWell(
@@ -121,7 +121,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {
           scaffoldKey.currentState.openDrawer();
         },
-        child: customImage(context, authenticationService.userModel?.profilePic,
+        child: customImage(context, authenticationState.userModel?.profilePic,
             height: 30),
       ),
     );

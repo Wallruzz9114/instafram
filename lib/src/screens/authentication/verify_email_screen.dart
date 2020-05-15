@@ -3,7 +3,7 @@ import 'package:instafram/src/components/custom_widgets.dart';
 import 'package:instafram/src/components/notify_text.dart';
 import 'package:instafram/src/components/shared/title_text.dart';
 import 'package:instafram/src/helpers/main_theme.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
@@ -19,8 +19,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget _body(BuildContext context) {
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     return Container(
       height: fullHeight(context),
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -61,7 +61,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               color: Colors.blueAccent,
               onPressed: _submit,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: TitleText(
+              child: const TitleText(
                 'Send Link',
                 color: Colors.white,
               ),
@@ -71,8 +71,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       );
 
   void _submit() {
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     state.sendEmailVerification(_scaffoldKey);
   }
 

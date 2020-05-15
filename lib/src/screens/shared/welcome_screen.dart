@@ -5,7 +5,7 @@ import 'package:instafram/src/helpers/main_theme.dart';
 import 'package:instafram/src/screens/authentication/sign_in_screen.dart';
 import 'package:instafram/src/screens/authentication/sign_up_screen.dart';
 import 'package:instafram/src/screens/home_screen.dart';
-import 'package:instafram/src/services/authentication_service.dart';
+import 'package:instafram/src/states/authentication_state.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -24,8 +24,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           color: InstaframColor.dodgetBlue,
           onPressed: () {
-            final AuthenticationService state =
-                Provider.of<AuthenticationService>(context, listen: false);
+            final AuthenticationState state =
+                Provider.of<AuthenticationState>(context, listen: false);
             Navigator.push(
               context,
               MaterialPageRoute<SignUpScreen>(
@@ -69,8 +69,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      final AuthenticationService state =
-                          Provider.of<AuthenticationService>(context,
+                      final AuthenticationState state =
+                          Provider.of<AuthenticationState>(context,
                               listen: false);
                       Navigator.push(
                         context,
@@ -101,13 +101,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService state =
-        Provider.of<AuthenticationService>(context, listen: false);
+    final AuthenticationState state =
+        Provider.of<AuthenticationState>(context, listen: false);
     return Scaffold(
       body: state.authenticationStatus == AuthenticationStatus.NOT_LOGGED_IN ||
               state.authenticationStatus == AuthenticationStatus.NOT_DETERMINED
           ? _body()
-          : HomeScreen(),
+          : const HomeScreen(),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ApplicationService extends ChangeNotifier {
+class ApplicationState extends ChangeNotifier {
   bool _isBusy;
   bool get isbusy => _isBusy;
   set loading(bool value) {

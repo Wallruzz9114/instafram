@@ -83,28 +83,26 @@ class User {
   List<String> followersList;
   List<String> followingList;
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'key': key,
-      'userId': userId,
-      'email': email,
-      'displayName': displayName,
-      'profilePic': profilePic,
-      'contact': contact,
-      'dob': dob,
-      'bio': bio,
-      'location': location,
-      'createdAt': createdAt,
-      'followers': followersList != null ? followersList.length : null,
-      'following': followingList != null ? followingList.length : null,
-      'userName': userName,
-      'webSite': webSite,
-      'isVerified': isVerified ?? false,
-      'fcmToken': fcmToken,
-      'followersList': followersList,
-      'followingList': followingList
-    };
-  }
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'key': key,
+        'userId': userId,
+        'email': email,
+        'displayName': displayName,
+        'profilePic': profilePic,
+        'contact': contact,
+        'dob': dob,
+        'bio': bio,
+        'location': location,
+        'createdAt': createdAt,
+        'followers': followersList != null ? followersList.length : null,
+        'following': followingList != null ? followingList.length : null,
+        'userName': userName,
+        'webSite': webSite,
+        'isVerified': isVerified ?? false,
+        'fcmToken': fcmToken,
+        'followersList': followersList,
+        'followingList': followingList
+      };
 
   User copyWith({
     String email,
@@ -125,34 +123,29 @@ class User {
     String fcmToken,
     List<String> followersList,
     List<String> followingList,
-  }) {
-    return User(
-      email: email ?? this.email,
-      bio: bio ?? this.bio,
-      contact: contact ?? this.contact,
-      createdAt: createdAt ?? this.createdAt,
-      displayName: displayName ?? this.displayName,
-      dob: dob ?? this.dob,
-      followers: followersList != null ? followersList.length : null,
-      following: following ?? this.following,
-      isVerified: isVerified ?? this.isVerified,
-      key: key ?? this.key,
-      location: location ?? this.location,
-      profilePic: profilePic ?? this.profilePic,
-      userId: userId ?? this.userId,
-      userName: userName ?? this.userName,
-      webSite: webSite ?? this.webSite,
-      fcmToken: fcmToken ?? this.fcmToken,
-      followersList: followersList ?? this.followersList,
-      followingList: followingList ?? this.followingList,
-    );
-  }
+  }) =>
+      User(
+        email: email ?? this.email,
+        bio: bio ?? this.bio,
+        contact: contact ?? this.contact,
+        createdAt: createdAt ?? this.createdAt,
+        displayName: displayName ?? this.displayName,
+        dob: dob ?? this.dob,
+        followers: followersList != null ? followersList.length : null,
+        following: following ?? this.following,
+        isVerified: isVerified ?? this.isVerified,
+        key: key ?? this.key,
+        location: location ?? this.location,
+        profilePic: profilePic ?? this.profilePic,
+        userId: userId ?? this.userId,
+        userName: userName ?? this.userName,
+        webSite: webSite ?? this.webSite,
+        fcmToken: fcmToken ?? this.fcmToken,
+        followersList: followersList ?? this.followersList,
+        followingList: followingList ?? this.followingList,
+      );
 
-  String getFollower() {
-    return '${followers ?? 0}';
-  }
+  String getFollower() => '${followers ?? 0}';
 
-  String getFollowing() {
-    return '${following ?? 0}';
-  }
+  String getFollowing() => '${following ?? 0}';
 }
