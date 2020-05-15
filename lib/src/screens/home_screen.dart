@@ -5,6 +5,7 @@ import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/utilities.dart';
 import 'package:instafram/src/models/user.dart';
 import 'package:instafram/src/screens/feed/feed_screen.dart';
+import 'package:instafram/src/screens/search_screen.dart';
 import 'package:instafram/src/states/application_state.dart';
 import 'package:instafram/src/states/authentication_state.dart';
 import 'package:instafram/src/states/feed_state.dart';
@@ -143,9 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
           refreshIndicatorKey: refreshIndicatorKey,
         );
         break;
-      // case 1:
-      //   return SearchScreen(scaffoldKey: _scaffoldKey);
-      //   break;
+      case 1:
+        return SearchScreen(scaffoldKey: _scaffoldKey);
+        break;
       // case 2:
       //   return NotificationsScreen(scaffoldKey: _scaffoldKey);
       //   break;
