@@ -1,7 +1,7 @@
-class Notification {
-  Notification({this.tweetKey});
+class InstaframNotification {
+  InstaframNotification({this.tweetKey});
 
-  Notification.fromJson(Map<String, dynamic> json) {
+  InstaframNotification.fromJson(Map<String, dynamic> json) {
     // tweetKey = tweetId;
     updatedAt = json['updatedAt'] as String;
     type = json['type'] as String;

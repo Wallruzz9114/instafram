@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
         scaffoldKey: widget.scaffoldKey,
         icon: AppIcon.settings,
         onActionPressed: onSettingIconPressed,
-        onSearchChanged: (text) {
+        onSearchChanged: (String text) {
           state.filterByUsername(text);
         },
       ),

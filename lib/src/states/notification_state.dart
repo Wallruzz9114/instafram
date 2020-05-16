@@ -6,7 +6,7 @@ import 'package:instafram/src/helpers/constants.dart';
 import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/utilities.dart';
 import 'package:instafram/src/models/feed.dart';
-import 'package:instafram/src/models/notification.dart';
+import 'package:instafram/src/models/instafram_notification.dart';
 import 'package:instafram/src/models/user.dart';
 import 'package:instafram/src/states/application_state.dart';
 
@@ -29,9 +29,9 @@ class NotificationState extends ApplicationState {
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  List<Notification> _notificationList;
+  List<InstaframNotification> _notificationList;
 
-  List<Notification> get notificationList => _notificationList;
+  List<InstaframNotification> get notificationList => _notificationList;
 
   /// [Intitilise firebase notification kDatabase]
   Future<bool> databaseInit(String userId) {
@@ -73,7 +73,7 @@ class NotificationState extends ApplicationState {
   void getDataFromDatabase(String userId) {
     try {
       loading = true;
-      _notificationList = <Notification>[];
+      _notificationList = <InstaframNotification>[];
       _userCollection
           .document(userId)
           .collection(NOTIFICATION_COLLECTION)
@@ -82,18 +82,19 @@ class NotificationState extends ApplicationState {
         // _feedlist = List<FeedModel>();
         if (querySnapshot != null && querySnapshot.documents.isNotEmpty) {
           for (int i = 0; i < querySnapshot.documents.length; i++) {
-            final Notification model =
-                Notification.fromJson(querySnapshot.documents[i].data);
+            final InstaframNotification model =
+                InstaframNotification.fromJson(querySnapshot.documents[i].data);
             model.tweetKey = querySnapshot.documents[i].documentID;
-            if (_notificationList
-                .any((Notification x) => x.tweetKey == model.tweetKey)) {
+            if (_notificationList.any(
+                (InstaframNotification x) => x.tweetKey == model.tweetKey)) {
               continue;
             }
             _notificationList.add(model);
           }
-          _notificationList.sort((Notification x, Notification y) =>
-              DateTime.parse(y.updatedAt)
-                  .compareTo(DateTime.parse(x.updatedAt)));
+          _notificationList.sort(
+              (InstaframNotification x, InstaframNotification y) =>
+                  DateTime.parse(y.updatedAt)
+                      .compareTo(DateTime.parse(x.updatedAt)));
         }
         loading = false;
         notifyListeners();
@@ -166,12 +167,13 @@ class NotificationState extends ApplicationState {
   /// Trigger when somneone like your tweet
   void _onNotificationAdded(DocumentSnapshot event) {
     if (event.data != null) {
-      final Notification model = Notification.fromJson(event.data);
+      final InstaframNotification model =
+          InstaframNotification.fromJson(event.data);
       model.tweetKey = event.documentID;
       // event.data["updatedAt"], event.data["type"]);
-      _notificationList ??= <Notification>[];
+      _notificationList ??= <InstaframNotification>[];
       if (_notificationList
-          .any((Notification x) => x.tweetKey == model.tweetKey)) {
+          .any((InstaframNotification x) => x.tweetKey == model.tweetKey)) {
         return;
       }
       _notificationList.insert(0, model);
@@ -185,11 +187,12 @@ class NotificationState extends ApplicationState {
   // /// Trigger when someone changed his like preference
   void _onNotificationChanged(DocumentSnapshot event) {
     if (event.data != null) {
-      final Notification model = Notification.fromJson(event.data);
+      final InstaframNotification model =
+          InstaframNotification.fromJson(event.data);
       model.tweetKey = event.documentID;
       //update notification list
       _notificationList
-          .firstWhere((Notification x) => x.tweetKey == model.tweetKey)
+          .firstWhere((InstaframNotification x) => x.tweetKey == model.tweetKey)
           .tweetKey = model.tweetKey;
       notifyListeners();
       cprint('Notification changed');
@@ -199,11 +202,12 @@ class NotificationState extends ApplicationState {
   /// Trigger when someone undo his like on tweet
   void _onNotificationRemoved(DocumentSnapshot event) {
     if (event.data != null) {
-      final Notification model = Notification.fromJson(event.data);
+      final InstaframNotification model =
+          InstaframNotification.fromJson(event.data);
       model.tweetKey = event.documentID;
       // remove notification from list
-      _notificationList
-          .removeWhere((Notification x) => x.tweetKey == model.tweetKey);
+      _notificationList.removeWhere(
+          (InstaframNotification x) => x.tweetKey == model.tweetKey);
       if (_notificationList.isEmpty) {
         _notificationList = null;
       }
