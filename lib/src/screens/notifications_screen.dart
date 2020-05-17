@@ -163,30 +163,30 @@ class NotificationTile extends StatelessWidget {
     );
   }
 
-  Widget _userAvater(
-      String userId, NotificationState state, ValueChanged<String> name) {
-    return FutureBuilder<User>(
-      future: state.getuserDetail(userId),
-      //  initialData: InitialData,
-      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-        if (snapshot.hasData) {
-          name(snapshot.data.displayName);
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed('/ProfilePage/' + snapshot.data?.userId);
-              },
-              child: customImage(context, snapshot.data.profilePic, height: 30),
-            ),
-          );
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
+  FutureBuilder<User> _userAvater(
+          String userId, NotificationState state, ValueChanged<String> name) =>
+      FutureBuilder<User>(
+        future: state.getuserDetail(userId),
+        //  initialData: InitialData,
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          if (snapshot.hasData) {
+            name(snapshot.data.displayName);
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('/ProfilePage/' + snapshot.data?.userId);
+                },
+                child:
+                    customImage(context, snapshot.data.profilePic, height: 30),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
+      );
 
   @override
   Column build(BuildContext context) {

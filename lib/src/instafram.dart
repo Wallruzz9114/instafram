@@ -7,7 +7,7 @@ import 'package:instafram/src/states/authentication_state.dart';
 import 'package:instafram/src/states/feed_state.dart';
 import 'package:instafram/src/states/notification_state.dart';
 import 'package:instafram/src/states/search_state.dart';
-import 'package:instafram/src/states/user_message_service.dart';
+import 'package:instafram/src/states/user_message_state.dart';
 import 'package:provider/provider.dart';
 
 class Instafram extends StatelessWidget {

@@ -5,14 +5,15 @@ import 'package:instafram/src/helpers/enums.dart';
 import 'package:instafram/src/helpers/utilities.dart';
 import 'package:instafram/src/models/user.dart';
 import 'package:instafram/src/screens/feed/feed_screen.dart';
+import 'package:instafram/src/screens/notifications_screen.dart';
 import 'package:instafram/src/screens/search_screen.dart';
-import 'package:instafram/src/screens/users/notifications_screen.dart';
+import 'package:instafram/src/screens/users/messages_list_screen.dart';
 import 'package:instafram/src/states/application_state.dart';
 import 'package:instafram/src/states/authentication_state.dart';
 import 'package:instafram/src/states/feed_state.dart';
 import 'package:instafram/src/states/notification_state.dart';
 import 'package:instafram/src/states/search_state.dart';
-import 'package:instafram/src/states/user_message_service.dart';
+import 'package:instafram/src/states/user_message_state.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -151,9 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return NotificationsScreen(scaffoldKey: _scaffoldKey);
         break;
-      // case 3:
-      //   return UserMessageScreen(scaffoldKey: _scaffoldKey);
-      //   break;
+      case 3:
+        return MessagesListScreen(scaffoldKey: _scaffoldKey);
+        break;
       default:
         return FeedScreen(scaffoldKey: _scaffoldKey);
         break;
